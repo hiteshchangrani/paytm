@@ -2,18 +2,17 @@ const mongoose = require("mongoose")
 const dotenv = require('dotenv').config()
 
 const connectDb = async () => {
-    try {
-      await mongoose.connect(dotenv?.parsed?.db, {
-        serverSelectionTimeoutMS: 30000, // 30 seconds
-        socketTimeoutMS: 45000 // 45 seconds
-      });
-      console.log("Server is connected to the database");
-    } catch (err) {
-      console.log("Server is not connected to the database", err.message);
-      // console.log(dotenv);
-    }
-  };
-  connectDb();
+  try {
+    await mongoose.connect(process.env.db, {
+      serverSelectionTimeoutMS: 30000,
+      socketTimeoutMS:        45000
+    });
+    console.log("Server is connected to the database");
+  } catch (err) {
+    console.error("Server is not connected to the database:", err.message);
+  }
+};
+connectDb();
 
 const userSchema = new mongoose.Schema({
     username: String,
